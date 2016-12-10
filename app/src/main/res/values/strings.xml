@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Movie Search</string>
+    <string name="loading">Waiting for sync…</string>
+    <string name="description_refresh">Refresh</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_main3">MainActivity3</string>
+
+    <string name="base_query_url">"http://www.omdbapi.com/?"</string>
+    <string name="no_thumbnail_img_url">"https://raw.githubusercontent.com/hcmsilva/snippets/master/UX_Views_Layouts/drawables/no_thumb.png"</string>
+</resources>
