@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="2dip"
+    android:paddingBottom="2dip"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/activatedBackgroundIndicator"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:mode="twoLine">
+
+
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="?android:attr/listPreferredItemHeight"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:layout_marginLeft="?android:attr/listPreferredItemPaddingStart"
+            android:layout_marginTop="9dip"
+            android:src="@drawable/no_thumb"
+            android:scaleType="fitCenter"/>
+
+        <TextView android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_marginLeft="?android:attr/listPreferredItemPaddingStart"
+            android:layout_marginTop="6dip"
+            android:textAppearance="?android:attr/textAppearanceListItem" />
+
+        <TextView android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text1"
+            android:layout_alignLeft="@+id/text1"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+
+</RelativeLayout>
