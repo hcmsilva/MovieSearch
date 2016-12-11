@@ -46,6 +46,7 @@ public class MainActivity3 extends AppCompatActivity
         mSearchView = (SearchView)findViewById(R.id.search);
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.content_main3);
         mRecyclerView = (RecyclerView)rl.findViewById(R.id.my_recyclerview);
+        mSearchView.setIconified(false);
 
         CustomAdapter<MovieResult> movieResultCustomAdapter =
                 new CustomAdapter<>(
@@ -73,6 +74,10 @@ public class MainActivity3 extends AppCompatActivity
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
+
+
+                        if(mDownloader != null)
+                            mDownloader.cancelPendingRequests();
 
                         if(newText.length() > 2 && newText.length() < minSearchCharacters)
                             Toast.makeText(MainActivity3.this,"Please insert "+(minSearchCharacters-newText.length())+" characters", Toast.LENGTH_SHORT).show();

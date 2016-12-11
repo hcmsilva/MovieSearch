@@ -21,6 +21,7 @@ public class VolleyDownloader {
 
     private static RequestQueue mRequestQueue;
     private Context ctx;
+    private final String TAG = "SEARCH";
 
     public VolleyDownloader(Context ctx)
     {
@@ -46,7 +47,7 @@ public class VolleyDownloader {
 
         StringRequest strRequest = new StringRequest(Request.Method.GET, url, mStringListener, mErrorListener);
         // Set the tag on the request.
-        strRequest.setTag(url);
+        strRequest.setTag(TAG);
 
         mRequestQueue.add(strRequest);
     }
@@ -65,6 +66,8 @@ public class VolleyDownloader {
     }
 
 
-
-
+    public void cancelPendingRequests() {
+        if (mRequestQueue != null)
+            mRequestQueue.cancelAll(TAG);
+    }
 }
