@@ -15,17 +15,13 @@ import java.net.URLEncoder;
 
 public class QueryTools {
 
-    public static URL urlBuilder(String title, String type, int year, int page, Context ctx)
-    {
+
+    public static URL searchUrlBuilder(String title, String type, int year, int page, Context ctx) throws UnsupportedEncodingException, MalformedURLException {
 
         String baseUrl = ctx.getString(R.string.base_query_url);
         String baseSearch="s=";
         String titleEncoded="";
-        try {
-            titleEncoded = URLEncoder.encode(title,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        titleEncoded = URLEncoder.encode(title,"UTF-8");
         String baseYear="&y=";
         String baseType="&type=";
         String returnType="&r=json";
@@ -33,13 +29,25 @@ public class QueryTools {
 
         String url = baseUrl+baseSearch+titleEncoded+baseYear+/*year+*/baseType+type+returnType+basePage+page;
 
-        try {
-            return new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
 
-        }
-
-        return null;
+        return new URL(url);
     }
+
+
+    public static URL detailsUrlBuilder(String imdbId, boolean displayTomatoes, Context ctx) throws UnsupportedEncodingException, MalformedURLException {
+        String baseUrl = ctx.getString(R.string.base_query_url);
+        String encodedId = "";
+        String baseImdbId = "i=";
+        encodedId = URLEncoder.encode(imdbId,"UTF-8");
+        String plot = "&plot=true";
+        String baseTomatoes = "&tomatoes=";
+        String returnType = "&r=json";
+
+        String url = baseUrl + baseImdbId + encodedId + baseTomatoes + displayTomatoes + plot + returnType;
+
+        return new URL(url);
+    }
+
+
+
 }

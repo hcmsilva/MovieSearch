@@ -12,19 +12,19 @@ public class MovieResult implements Parcelable, DoubleListable
 
     @SerializedName("Title")
     @Expose
-    private String title;
+    protected String title;
     @SerializedName("Year")
     @Expose
-    private String year;
+    protected String year;
     @SerializedName("imdbID")
     @Expose
-    private String imdbID;
+    protected String imdbID;
     @SerializedName("Type")
     @Expose
-    private String type;
+    protected String type;
     @SerializedName("Poster")
     @Expose
-    private String poster;
+    protected String poster;
     public final static Creator<MovieResult> CREATOR = new Creator<MovieResult>() {
 
 
