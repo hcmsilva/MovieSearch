@@ -23,17 +23,19 @@ import com.demos.henrique.moviesearch.network.VolleyDownloader;
 
 import org.json.JSONException;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity3 extends AppCompatActivity
         implements DataGetter, Response.Listener<String>, Response.ErrorListener {
 
-    SearchView mSearchView;
-    RecyclerView mRecyclerView;
-    static VolleyDownloader mDownloader;
-    int nextPageToLoad = 1;//incremented by loadMore, reset by onqueryTextChanged
-    final int minSearchCharacters = 4;
+    private SearchView mSearchView;
+    private RecyclerView mRecyclerView;
+    private VolleyDownloader mDownloader;
+    private int nextPageToLoad = 1;//incremented by loadMore, reset by onqueryTextChanged
+    private final int minSearchCharacters = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,25 +97,47 @@ public class MainActivity3 extends AppCompatActivity
 
     private void resetAndMakeNewQuery() {
 
+        String queryUrl = "";
+        try {
+            queryUrl = QueryTools.searchUrlBuilder(mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return;
+        }
+
         nextPageToLoad = 1;
 
         ((CustomAdapter)mRecyclerView.getAdapter()).resetDataSet();
         mDownloader.makeStringRequest(
-
-                QueryTools.searchUrlBuilder(mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString(),
+                queryUrl,
                 MainActivity3.this,
                 MainActivity3.this);
-
     }
 
+
+    public VolleyDownloader getmDownloader() {
+        return mDownloader;
+    }
 
     @Override
     public void getNextPage() {
 
-        mDownloader.makeStringRequest(
-                QueryTools.searchUrlBuilder( mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString(),
-                MainActivity3.this,
-                MainActivity3.this);
+        try {
+
+            mDownloader.makeStringRequest(
+                    QueryTools.searchUrlBuilder( mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString(),
+                    MainActivity3.this,
+                    MainActivity3.this);
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         return;
     }
 
