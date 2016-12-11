@@ -8,6 +8,7 @@
     tools:context="com.demos.henrique.moviesearch.UI.MovieDetailActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/m_appbar_layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -65,9 +66,10 @@
 
 
 
+        <include layout="@layout/content_movie_detail"/>
+
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_movie_detail" />
 
 
 
