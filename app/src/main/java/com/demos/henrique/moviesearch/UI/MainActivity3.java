@@ -1,21 +1,21 @@
 package com.demos.henrique.moviesearch.UI;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+
 import com.demos.henrique.moviesearch.R;
 import com.demos.henrique.moviesearch.UI.adapters.CustomAdapter;
 import com.demos.henrique.moviesearch.UI.adapters.aux.DataGetter;
+import com.demos.henrique.moviesearch.UI.adapters.aux.OnItemClickListener;
 import com.demos.henrique.moviesearch.model.MovieResult;
 import com.demos.henrique.moviesearch.network.QueryTools;
 import com.demos.henrique.moviesearch.network.SearchDeserializer;
@@ -45,12 +45,25 @@ public class MainActivity3 extends AppCompatActivity
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.content_main3);
         mRecyclerView = (RecyclerView)rl.findViewById(R.id.my_recyclerview);
 
-        mRecyclerView.setAdapter(new CustomAdapter<MovieResult>(new ArrayList<MovieResult>(), this, this));
+        CustomAdapter<MovieResult> movieResultCustomAdapter =
+                new CustomAdapter<>(
+                        new ArrayList<MovieResult>(),
+                        this,
+                        this,
+                        new OnItemClickListener<MovieResult>(
+                                this,
+                                MovieDetailActivity.class,
+                                getString(R.string.movie_result_key)));
+
+        mRecyclerView.setAdapter(movieResultCustomAdapter);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mDownloader = new VolleyDownloader(this);
 
         mSearchView.setOnQueryTextListener(
+
+                //TODO extract to class
                 new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -77,19 +90,7 @@ public class MainActivity3 extends AppCompatActivity
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(
-                new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                    mDownloader.makeStringRequest(
-                            QueryTools.urlBuilder(mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, view.getContext()).toString(),
-                            MainActivity3.this,
-                            MainActivity3.this);
-
-                }
-        });
     }
 
     private void resetAndMakeNewQuery() {
@@ -99,7 +100,7 @@ public class MainActivity3 extends AppCompatActivity
         ((CustomAdapter)mRecyclerView.getAdapter()).resetDataSet();
         mDownloader.makeStringRequest(
 
-                QueryTools.urlBuilder(mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString(),
+                QueryTools.searchUrlBuilder(mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString(),
                 MainActivity3.this,
                 MainActivity3.this);
 
@@ -110,7 +111,7 @@ public class MainActivity3 extends AppCompatActivity
     public void getNextPage() {
 
         mDownloader.makeStringRequest(
-                QueryTools.urlBuilder( mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString(),
+                QueryTools.searchUrlBuilder( mSearchView.getQuery().toString(),"movie",-1, nextPageToLoad, this).toString(),
                 MainActivity3.this,
                 MainActivity3.this);
         return;
