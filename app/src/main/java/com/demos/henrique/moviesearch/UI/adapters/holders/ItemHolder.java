@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.demos.henrique.moviesearch.R;
+import com.demos.henrique.moviesearch.UI.MovieDetailActivity;
 import com.demos.henrique.moviesearch.UI.adapters.aux.DoubleListable;
 import com.demos.henrique.moviesearch.UI.adapters.aux.ItemTOnClickListener;
+import com.demos.henrique.moviesearch.UI.adapters.aux.OnItemClickListener;
+import com.demos.henrique.moviesearch.model.MovieResult;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -21,19 +24,18 @@ public class ItemHolder<T extends DoubleListable & Parcelable> extends BaseViewH
     public TextView smallText;
     public ImageView thumbnailImage;
     private Context ctx;
-    private ItemTOnClickListener<T> genericClickListener;
+
     T item;
 
 
 
-    public ItemHolder(View itemView, Context ctx, ItemTOnClickListener<T> listener) {
+    public ItemHolder(View itemView, Context ctx) {
         super(itemView);
 
         thumbnailImage = (ImageView) itemView.findViewById(R.id.thumbnail);
         mainText = (TextView) itemView.findViewById(R.id.text1);
         smallText = (TextView) itemView.findViewById(R.id.text2);
         this.ctx = ctx;
-        genericClickListener = listener;
     }
 
 
@@ -57,9 +59,19 @@ public class ItemHolder<T extends DoubleListable & Parcelable> extends BaseViewH
                     .centerCrop()
                     .into(thumbnailImage);
 
-        genericClickListener.setItem(item);
-        itemView.setOnClickListener(genericClickListener);
+        setListener();
+    }
 
+
+    private void setListener() {
+
+        ItemTOnClickListener<T> genericOnClickListener = new OnItemClickListener<T>(
+                ctx,
+                MovieDetailActivity.class,
+                ctx.getString(R.string.movie_result_key));
+
+        genericOnClickListener.setItem(item);
+        itemView.setOnClickListener(genericOnClickListener);
     }
 
 }

@@ -29,12 +29,11 @@ public class CustomAdapter<T extends DoubleListable & Parcelable> extends Recycl
     Context ctx;
     private ItemTOnClickListener<T> genOnClickListener;
 
-    public CustomAdapter(List<T> data, DataGetter host, Context ctx, ItemTOnClickListener<T> genericOnClickListener)
+    public CustomAdapter(List<T> data, DataGetter host, Context ctx)
     {
         dataSet = data;
         getter = host;
         this.ctx = ctx;
-        this.genOnClickListener = genericOnClickListener;
     }
 
 
@@ -45,7 +44,7 @@ public class CustomAdapter<T extends DoubleListable & Parcelable> extends Recycl
         View rowView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_layout, parent, false);
 
-        return new ItemHolder<>(rowView, ctx, genOnClickListener);
+        return new ItemHolder<>(rowView, ctx);
     }
 
     @Override

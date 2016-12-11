@@ -19,9 +19,9 @@ import java.util.List;
  * Created by henrique on 09-12-2016.
  */
 
-public class SearchDeserializer {
+public class CustomDeserializer {
 
-    public static final String TAG = "SearchDeserializer";
+    public static final String TAG = "CustomDeserializer";
 
     public static List<MovieResult> getMovies(String json) throws JSONException {
         Log.i(TAG, "Parsing stream as entries");

@@ -17,8 +17,8 @@ import com.demos.henrique.moviesearch.UI.adapters.CustomAdapter;
 import com.demos.henrique.moviesearch.UI.adapters.aux.DataGetter;
 import com.demos.henrique.moviesearch.UI.adapters.aux.OnItemClickListener;
 import com.demos.henrique.moviesearch.model.MovieResult;
+import com.demos.henrique.moviesearch.network.CustomDeserializer;
 import com.demos.henrique.moviesearch.network.QueryTools;
-import com.demos.henrique.moviesearch.network.SearchDeserializer;
 import com.demos.henrique.moviesearch.network.VolleyDownloader;
 
 import org.json.JSONException;
@@ -51,11 +51,7 @@ public class MainActivity3 extends AppCompatActivity
                 new CustomAdapter<>(
                         new ArrayList<MovieResult>(),
                         this,
-                        this,
-                        new OnItemClickListener<MovieResult>(
-                                this,
-                                MovieDetailActivity.class,
-                                getString(R.string.movie_result_key)));
+                        this);
 
         mRecyclerView.setAdapter(movieResultCustomAdapter);
 
@@ -146,7 +142,7 @@ public class MainActivity3 extends AppCompatActivity
 
         try {
 
-            List<MovieResult> data = SearchDeserializer.getMovies(response);
+            List<MovieResult> data = CustomDeserializer.getMovies(response);
 
             if(data == null)
                 return;
